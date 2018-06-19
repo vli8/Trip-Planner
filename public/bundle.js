@@ -115,7 +115,18 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("//webpack reads from entry point index.js (this file) and reads everything on it like a backend file which is why it can compile the 'require'\nconst mapboxgl = __webpack_require__(/*! mapbox-gl */ \"./node_modules/mapbox-gl/dist/mapbox-gl.js\");\n\nmapboxgl.accessToken = 'pk.eyJ1IjoiZmlsYWRlbGZvIiwiYSI6ImNqaW01aGk3cjAwa3Ezd28yeG5rdDA4ZG4ifQ.9cpbfyj_cB5Ikc2tMIBBdw';\nconst map = new mapboxgl.Map({\n    container: \"map\",//map is the id = \"#map\" of the html file\n    center: [-74.009, 40.705],//location of Full Stack\n    zoom: 12, //Starting zoom\n    style: \"mapbox://styles/mapbox/streets-v10\" //beginning styling template\n})\n\nconst marker = document.createElement(\"div\");\n\nmarker.style.width = \"32px\";\nmarker.style.height = \"39px\";\nmarker.style.backgroundColor = \"url(http://i.imgur.com/WbMOfMl.png)\"\n\nnew mapboxgl.Marker(marker).setLngLat([-74.009, 40.705]).addTo(map);\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("//webpack reads from entry point index.js (this file) and reads everything on it like a backend file which is why it can compile the 'require'\nconst mapboxgl = __webpack_require__(/*! mapbox-gl */ \"./node_modules/mapbox-gl/dist/mapbox-gl.js\");\nconst markers = __webpack_require__(/*! ./markers.js */ \"./src/markers.js\")\n\nmapboxgl.accessToken = 'pk.eyJ1IjoiZmlsYWRlbGZvIiwiYSI6ImNqaW01aGk3cjAwa3Ezd28yeG5rdDA4ZG4ifQ.9cpbfyj_cB5Ikc2tMIBBdw';\nconst map = new mapboxgl.Map({\n    container: \"map\",//map is the id = \"#map\" of the html file\n    center: [-74.009, 40.705],//location of Full Stack\n    zoom: 12, //Starting zoom\n    style: \"mapbox://styles/mapbox/streets-v10\" //beginning styling template\n})\n\nconst marker = document.createElement(\"div\");\n\n// marker.style.width = \"32px\";\n// marker.style.height = \"39px\";\n// marker.style.backgroundImage = \"url(http://i.imgur.com/WbMOfMl.png)\";\n\n// new mapboxgl.Marker(marker).setLngLat([-74.009, 40.705]).addTo(map);\n\nmarkers('restaurants', [-74.009, 40.705]).addTo(map)\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/markers.js":
+/*!************************!*\
+  !*** ./src/markers.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const mapboxgl = __webpack_require__(/*! mapbox-gl */ \"./node_modules/mapbox-gl/dist/mapbox-gl.js\");\n\nconst iconURLs = {\n  hotels: \"http://i.imgur.com/D9574Cu.png\",\n  restaurants: \"http://i.imgur.com/cqR6pUI.png\",\n  activities: \"http://i.imgur.com/WbMOfMl.png\"\n};\n\nconst buildMarker = (type, coords) => {\n  const marker = document.createElement(\"div\");\n  marker.style.width = \"32px\";\n  marker.style.height = \"39px\";\n  if(type === 'hotels'){\n    marker.style.backgroundImage = `url(${iconURLs.hotels})`\n  }\n  else if(type === 'restaurants'){\n    marker.style.backgroundImage = `url(${iconURLs.restaurants})`\n  }\n  else {\n    marker.style.backgroundImage = `url(${iconURLs.activities})`\n  }\n\n  return new mapboxgl.Marker(marker).setLngLat(coords)\n\n}\n\nmodule.exports = buildMarker\n\n\n\n//# sourceURL=webpack:///./src/markers.js?");
 
 /***/ })
 
